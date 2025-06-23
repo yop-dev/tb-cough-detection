@@ -8,6 +8,8 @@
 
 A modern, user-friendly application for detecting tuberculosis (TB) from cough audio samples using deep learning.
 
+> **IMPORTANT DISCLAIMER**: This tool is intended for screening purposes only and is not a substitute for professional medical diagnosis. The technology for cough analysis is still in its early development phases, and results should be interpreted with caution. Always consult with healthcare professionals for proper diagnosis and treatment of tuberculosis or any other medical condition.
+
 ## Features
 
 - **Intuitive Interface**: Modern, clean UI design for ease of use
@@ -31,8 +33,6 @@ The TB Cough Detection System uses a state-of-the-art deep learning model to ana
 
 ### Installation
 
-#### Option 1: Run from source
-
 1. Clone this repository:
 
    ```bash
@@ -48,14 +48,8 @@ The TB Cough Detection System uses a state-of-the-art deep learning model to ana
 
 3. Run the application:
    ```bash
-   python inference.py
+   python new_inference.py
    ```
-
-#### Option 2: Use the executable (Windows)
-
-1. Download the latest release from the [releases page](https://github.com/yop-dev/tb-cough-detection/releases)
-2. Extract the ZIP file
-3. Run `TB_Cough_Detection.exe`
 
 ## Usage Guide
 
@@ -85,43 +79,42 @@ The TB Cough Detection System uses a state-of-the-art deep learning model to ana
    - Click "Export Results" to save the analysis as a CSV file
    - The export includes individual results and a summary
 
-## Building the Executable
-
-To build the executable yourself:
-
-1. Install PyInstaller:
-
-   ```bash
-   pip install pyinstaller
-   ```
-
-2. Run the build script:
-
-   ```bash
-   python build_exe.py
-   ```
-
-3. The executable will be created in the `dist` folder
 
 ## Model Information
 
-The system uses a MobileNetV4 backbone with a Res2TSM block for temporal modeling. The model processes mel spectrograms of cough audio and has been trained on a dataset of TB-positive and TB-negative cough samples.
+The system uses a pre-trained MobileNetV4 backbone (from the TIMM library) with our custom Res2TSM block added after the final feature map for temporal modeling. The model processes mel spectrograms of cough audio and has been trained on the CODA TB Dream Challenge dataset from Synapse, which contains TB-positive and TB-negative cough samples.
+
+The model architecture was specifically chosen to be mobile-friendly and resource-efficient. We deliberately avoided using transformer models or other resource-intensive architectures to ensure the system could run effectively on mobile devices and computers with limited computational resources.
 
 Key components:
 
-- **MobileNetV4**: Efficient CNN architecture for feature extraction
-- **Res2TSM**: Temporal modeling for capturing time-dependent features
-- **Mel Spectrogram**: Audio representation that mimics human hearing perception
+- **MobileNetV4**: Standard pre-trained efficient CNN architecture for feature extraction, optimized for mobile and edge devices (we use the implementation from the TIMM library)
+- **Custom Res2TSM Block**: Our lightweight temporal modeling module added after MobileNet's feature extraction, designed for capturing time-dependent features without the computational overhead of transformer models
+- **Mel Spectrogram**: Audio representation that mimics human hearing perception while being computationally efficient to process
+
+*Note: We do not claim the MobileNetV4 architecture as our own work. We have simply utilized the pre-trained model from the TIMM library and added our custom Res2TSM block to adapt it for temporal audio analysis.*
 
 ## Performance
 
-The model achieves:
+When evaluated on the CODA TB Dream Challenge dataset from Synapse, the model achieves:
 
 - Sensitivity: ~85%
 - Specificity: ~90%
 - Accuracy: ~88%
 
-_Note: Performance metrics are based on internal testing and may vary in real-world scenarios._
+_Note: Performance metrics are based on internal testing using the CODA TB Dream Challenge dataset and may vary in real-world scenarios. These results should not be interpreted as clinical validation. This technology is still experimental and in early development stages._
+
+## Limitations and Current State
+
+This TB Cough Detection System is a research tool that demonstrates the potential of audio-based screening for tuberculosis. However, users should be aware of the following limitations:
+
+- **Early Development Stage**: The technology for cough analysis is still emerging and not fully validated in diverse clinical settings.
+- **Screening Tool Only**: This system is designed to assist with preliminary screening and should never replace proper medical testing and diagnosis.
+- **Environmental Factors**: Background noise, recording quality, and other environmental factors can significantly affect results.
+- **Limited Training Data**: The model has been trained on the CODA TB Dream Challenge dataset from Synapse, which may not represent all populations, cough types, or TB manifestations.
+- **Not FDA/CE Approved**: This tool has not received regulatory approval for clinical use in diagnosing tuberculosis.
+
+Healthcare professionals should consider this as one of many tools in the diagnostic process, and patients should always seek proper medical evaluation regardless of the results provided by this system.
 
 ## License
 
@@ -129,8 +122,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- The MobileNetV4 implementation is based on the [TIMM library](https://github.com/rwightman/pytorch-image-models)
-- The Res2TSM module is inspired by the Temporal Shift Module and Res2Net architectures
+- The MobileNetV4 implementation is directly from the [TIMM library](https://github.com/rwightman/pytorch-image-models) by Ross Wightman and contributors
+- The Res2TSM module is inspired by the [Temporal Shift Module](https://github.com/mit-han-lab/temporal-shift-module) by MIT HAN Lab and the [Res2Net](https://github.com/gasvn/Res2Net) architecture by Shang-Hua Gao et al.
+- The model was trained using the [CODA TB Dream Challenge dataset](https://www.synapse.org/#!Synapse:syn26133770) provided by Synapse
+- We thank the original authors of these architectures and libraries, as well as Synapse for providing the dataset for research purposes
 - Thanks to all contributors who have helped improve this project
 
 ## Contact

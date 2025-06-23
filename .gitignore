@@ -20,10 +20,6 @@ var/
 .installed.cfg
 *.egg
 
-# PyInstaller
-dist/
-build/
-*.spec
 
 # Installer logs
 pip-log.txt
