@@ -130,7 +130,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For questions, suggestions, or collaboration opportunities, please open an issue on this repository.
+For questions, suggestions, or collaboration opportunities, please reach out:
+
+- **Joner De Silva**
+  - LinkedIn: [https://www.linkedin.com/in/joner-de-silva-861575203/](https://www.linkedin.com/in/joner-de-silva-861575203/)
+  - Portfolio: [https://portfolio-theta-two-19.vercel.app](https://portfolio-theta-two-19.vercel.app)
+  
+You can also open an issue on this repository for project-specific inquiries.
 
 ---
 
